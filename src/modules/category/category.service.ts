@@ -23,7 +23,7 @@ export class CategoryService {
     });
   }
 
-  async findAll() {
+  async findMany() {
     return await this.categoryRepository.findMany({
       include: { products: true, _count: true },
     });

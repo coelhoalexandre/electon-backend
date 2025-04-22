@@ -29,9 +29,9 @@ export class CategoryController {
   }
 
   @Get()
-  async findAll() {
+  async findMany() {
     try {
-      const categories = await this.categoryService.findAll();
+      const categories = await this.categoryService.findMany();
       const handledCategories = categories.map((category) => {
         const data = {
           ...category,

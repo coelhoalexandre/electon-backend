@@ -1,98 +1,115 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Electon Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Rodando o projeto
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Após a clonagem do projeto, é necessário instalar as dependências com o `npm install` e é possível iniciar o projeto com `npm run start` ou `npm run start:dev`, levantar o servidor sem e com watch mode, respectivamente, na porta 8080.
 
-## Description
+Só que antes de levantar o servidor, esse projeto originalmente usa Prisma Studio com Postgres como banco de dados, entretanto é possível fazer conexões com outras formas de bancos dados, desde que seja possível com o Prisma ORM e provido pelo postgres(provider definido em schema.prism).
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+É necessário um arquivo `.env` com a variável **DATABASE_URL** que será lida pelo Prisma.
 
-## Project setup
+Após isso, será necessário o comando `npm run prisma:migrate` para rodar as migrações e atualiza o cliente do Prisma dos arquivos.
 
-```bash
-$ npm install
-```
+Por fim, também é necessário uma variável **JWT_SECRET** em `.env` com algum valor qualquer, que será usado na criação de JWTs.
 
-## Compile and run the project
+## Rotas
 
-```bash
-# development
-$ npm run start
+- Product - **/product**
 
-# watch mode
-$ npm run start:dev
+  - Post - **/** - Cria um Produto a partir dos dados passados no body. Dados necessários definido em /src/modules/product/dto/create-product.dto.ts.
+  - Get - **/** - Ler muitos Produtos e pode receber alguns dados de pesquisa, definido em /src/interfaces/product-query-string.interface.ts.
+  - Get - **/popular** - Ler muitos Produtos priorizando aqueles com maiores quantidades de estrelas e também aceita o mesmos dados de pesquisa que a rota acima.
+  - Get - **/:slug** - Ler um único produto baseado em seu campo único slug passado por parâmetro.
+  - Patch - **/:id** - Atualiza um produto baseado em seu campo de identificação, id, passado por parâmetro com os dados passados, definido em /src/modules/product/dto/update-product.dto.ts.
+  - Delete - **/:id** - Remove um produto baseado em campo de identificação, id.
 
-# production mode
-$ npm run start:prod
-```
+- Category - **/category**
 
-## Run tests
+  - Post - **/** - Cria uma categoria a partir dos dados passados no body. Dados necessários definido em /src/category/modules/dto/create-category.dto.ts.
+  - Get - **/** - Ler muitas categorias. Um detalhe é que é realizado uma modificação no padrão do objetivo, em que é criada a propriedade totalItems que recebe a quantidade de produtos.
+  - Patch - **/:id** - Atualiza um produto baseado em seu campo de identificação, id, passado por parâmetro com os dados passados, definido em /src/modules/category/dto/update-category.dto.ts. (Não atualiza produtos)
 
-```bash
-# unit tests
-$ npm run test
+- User - **/user**
 
-# e2e tests
-$ npm run test:e2e
+  - Post - **/** - Cria um usuário a partir dos dados passados no body. Dados necessários definido em /src/user/modules/dto/create-user.dto.ts.
+  - Get - **/** - Ler muitos usuários.
+  - Get - **/cart-items** - Ler usuários pelo id e retorna seus itens de carrinho. Token de Autenticação no headers.
+  - Patch - **/cart-items** - Atualiza o carrinho de produtos do usuário adicionando novos IDs.
 
-# test coverage
-$ npm run test:cov
-```
+- Auth - **/auth**
 
-## Deployment
+  - Post - **/** - Devolve (ou não) objeto com token de acesso a partir dos dados passados pelo body. Dados necessários definido /src/auth/modules/dto/create-signin.dto.ts.
+  - Get - **/** - Devolve usuário autenticado.
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+- Cart Item - **/cart-item**
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+  - Post - **/auth** - Cria um item de carrinho a partir dos dados passados no body e id do usuário na autenticação. Dados necessários para o body definido em /src/modules/product/dto/create-product.dto.ts.
+  - Post - **/no-auth** - Cria um item de carrinho a partir dos dados passados no body. Dados necessários para o body definido em /src/modules/product/dto/create-product.dto.ts.
+  - Patch - **/auth/:id** - Atualiza exclusivamente a quantidade do item do carrinho identificado pelo id passado pelo parâmetro e o body. Necessário autenticação.
+  - Patch - **/no-auth/:id** - Atualiza exclusivamente a quantidade do item do carrinho identificado pelo id passado pelo parâmetro e o body.
+  - Delete - **/auth/all** - Remove todos os itens de carrinho de um id de usuário. Necessário autenticação.
+  - Delete - **/auth/:id** - Remove um item de carrinho identificado pelo parâmetro id. Necessário autenticação.
+  - Delete - **/no-auth/:id** - Remove um item de carrinho identificado pelo parâmetro id.
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+## Ferramentas Usadas
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+- NestJS
+- Prisma ORM
+- Prisma Studio
+- TypeScript
+- JSON Web Token
+- Bcrypt
+- Postman
 
-## Resources
+## Objetivos
 
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+[x] Iniciar o Prisma
+[x] Criar schema de Produtos
+[x] Desenvolver Módulo de Produtos
+[x] Criar schema de Categorias
+[x] Desenvolver Módulo de Categorias
+[x] Criar schema de Usuário
+[x] Desenvolver Módulo de Usuário
+[x] 'Hashear' senha do usuário
+[x] Desenvolver Módulo de Autenticação
+[x] Desenvolver função de Login
+[x] Desenvolver Guard para verificação de Autenticação
+[x] Criar schema de CartItem
+[x] Desenvolver Módulo de CartItem
+[x] Finalizar CRUD de Produtos
+[] Finalizar CRUD de Categorias
+[] Finalizar CRUD de Usuários
+[] Finalizar CRUD de CartItem
+[] Criar schema de Marca
+[] Desenvolver Módulo de Marca
+[] Criar schema de Favoritos
+[] Desenvolver Módulo de Favoritos
+[] Criar schema de Reviews
+[] Desenvolver Módulo de Reviews
+[] Criar schema de Variação de Produto
+[] Gerenciar Produto para que haja Variações (Preço, Cores, Marcas, Reviews)
+[] Finalizar CRUD de Marca
+[] Finalizar CRUD de Reviews
+[] Finalizar CRUD de Favoritos
+[] Aprimorar sistema de Autenticação com Refresh Token
+[] Criar schema de Papéis/Permissões
+[] Desenvolver Módulo de Papéis/Permissões
+[] Finalizar CRUD de Papéis/Permissões
+[] Melhorar a Segurança de Leitura de Dados com tratamento de Permissões
+[] Iniciar desenvolvimento do sistema de checkout
+[] Criar schema de Pedidos
+[] Desenvolver Módulo de Pedidos
+[] Finalizar CRUD de Pedidos
+[] Criar schema de Espaços/Lojas Físicos
+[] Desenvolver Módulo de Espaços/Lojas Físicos
+[] Finalizar CRUD de Espaços/Lojas Físicos
+[] Cálculo de Frete
+[] Finalizar o desenvolvimento do sistema de checkout
+[] Criar schema de Post do Blog
+[] Desenvolver Módulo de Post do Blog
+[] Finalizar CRUD de Post do Blog
+[] Tratar os Erros
+[] Tornar o Código mais escalável
+[] Desenvolvimento de um Logging Melhor
+[] Adicionar Testes Automatizados
+[] Refatorar
