@@ -63,53 +63,53 @@ Por fim, também é necessário uma variável **JWT_SECRET** em `.env` com algum
 
 ## Objetivos
 
-[x] Iniciar o Prisma
-[x] Criar schema de Produtos
-[x] Desenvolver Módulo de Produtos
-[x] Criar schema de Categorias
-[x] Desenvolver Módulo de Categorias
-[x] Criar schema de Usuário
-[x] Desenvolver Módulo de Usuário
-[x] 'Hashear' senha do usuário
-[x] Desenvolver Módulo de Autenticação
-[x] Desenvolver função de Login
-[x] Desenvolver Guard para verificação de Autenticação
-[x] Criar schema de CartItem
-[x] Desenvolver Módulo de CartItem
-[x] Finalizar CRUD de Produtos
-[] Finalizar CRUD de Categorias
-[] Finalizar CRUD de Usuários
-[] Finalizar CRUD de CartItem
-[] Criar schema de Marca
-[] Desenvolver Módulo de Marca
-[] Criar schema de Favoritos
-[] Desenvolver Módulo de Favoritos
-[] Criar schema de Reviews
-[] Desenvolver Módulo de Reviews
-[] Criar schema de Variação de Produto
-[] Gerenciar Produto para que haja Variações (Preço, Cores, Marcas, Reviews)
-[] Finalizar CRUD de Marca
-[] Finalizar CRUD de Reviews
-[] Finalizar CRUD de Favoritos
-[] Aprimorar sistema de Autenticação com Refresh Token
-[] Criar schema de Papéis/Permissões
-[] Desenvolver Módulo de Papéis/Permissões
-[] Finalizar CRUD de Papéis/Permissões
-[] Melhorar a Segurança de Leitura de Dados com tratamento de Permissões
-[] Iniciar desenvolvimento do sistema de checkout
-[] Criar schema de Pedidos
-[] Desenvolver Módulo de Pedidos
-[] Finalizar CRUD de Pedidos
-[] Criar schema de Espaços/Lojas Físicos
-[] Desenvolver Módulo de Espaços/Lojas Físicos
-[] Finalizar CRUD de Espaços/Lojas Físicos
-[] Cálculo de Frete
-[] Finalizar o desenvolvimento do sistema de checkout
-[] Criar schema de Post do Blog
-[] Desenvolver Módulo de Post do Blog
-[] Finalizar CRUD de Post do Blog
-[] Tratar os Erros
-[] Tornar o Código mais escalável
-[] Desenvolvimento de um Logging Melhor
-[] Adicionar Testes Automatizados
-[] Refatorar
+Iniciar o Prisma
+Criar schema de Produtos
+Desenvolver Módulo de Produtos
+Criar schema de Categorias
+Desenvolver Módulo de Categorias
+Criar schema de Usuário
+Desenvolver Módulo de Usuário
+'Hashear' senha do usuário
+Desenvolver Módulo de Autenticação
+Desenvolver função de Login
+Desenvolver Guard para verificação de Autenticação
+Criar schema de CartItem
+Desenvolver Módulo de CartItem
+Finalizar CRUD de Produtos
+Finalizar CRUD de Categorias
+Finalizar CRUD de Usuários
+Finalizar CRUD de CartItem
+Criar schema de Marca
+Desenvolver Módulo de Marca
+Criar schema de Favoritos
+Desenvolver Módulo de Favoritos
+Criar schema de Reviews
+Desenvolver Módulo de Reviews
+Criar schema de Variação de Produto
+Gerenciar Produto para que haja Variações (Preço, Cores, Marcas, Reviews)
+Finalizar CRUD de Marca
+Finalizar CRUD de Reviews
+Finalizar CRUD de Favoritos
+Aprimorar sistema de Autenticação com Refresh Token
+Criar schema de Papéis/Permissões
+Desenvolver Módulo de Papéis/Permissões
+Finalizar CRUD de Papéis/Permissões
+Melhorar a Segurança de Leitura de Dados com tratamento de Permissões
+Iniciar desenvolvimento do sistema de checkout
+Criar schema de Pedidos
+Desenvolver Módulo de Pedidos
+Finalizar CRUD de Pedidos
+Criar schema de Espaços/Lojas Físicos
+Desenvolver Módulo de Espaços/Lojas Físicos
+Finalizar CRUD de Espaços/Lojas Físicos
+Cálculo de Frete
+Finalizar o desenvolvimento do sistema de checkout
+Criar schema de Post do Blog
+Desenvolver Módulo de Post do Blog
+Finalizar CRUD de Post do Blog
+Tratar os Erros
+Tornar o Código mais escalável
+Desenvolvimento de um Logging Melhor
+Adicionar Testes Automatizados
+Refatorar
